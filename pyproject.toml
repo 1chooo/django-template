@@ -8,6 +8,7 @@ version = "1.0.0"
 
 [tool.poetry.dependencies]
 argon2-cffi = "^23.1.0"
+boto3 = "^1.35.81"
 celery = "^5.4.0"
 crispy-bootstrap5 = "^2024.10"
 cryptography = "^44.0.0"
@@ -18,24 +19,23 @@ django-celery-results = "2.5.1"
 django-cors-headers = "^4.6.0"
 django-crispy-forms = "^2.3"
 django-debug-toolbar = "^4.4.6"
+django-environ = "^0.11.2"
 django-ninja-extra = "^0.21.8"
+django-ses = "^4.3.0"
+django-storages = {extras = ["s3"], version = "^1.14.4"}
 djangorestframework = "^3.15.2"
 djangorestframework-types = "^0.9.0"
 email-validator = "^2.1.1"
 flower = "^2.0.1"
-pillow = "^11.0.0"
-python = "3.12.*"
-sentry-sdk = { extras = ["django"], version = "^2.16.0" }
-uvicorn = "0.34.0"
-psycopg = { extras = ["binary", "pool"], version = "^3.2.3" }
-django-environ = "^0.11.2"
-django-ses = "^4.3.0"
-django-storages = { extras = ["s3"], version = "^1.14.4" }
-boto3 = "^1.35.81"
-requests = "^2.32.3"
-inflection = "^0.5.1"
-redis = "^5.2.1"
 hiredis = "^3.1.0"
+inflection = "^0.5.1"
+pillow = "^11.0.0"
+psycopg = {extras = ["binary", "pool"], version = "^3.2.3"}
+python = "3.12.*"
+redis = "^5.2.1"
+requests = "^2.32.3"
+sentry-sdk = {extras = ["django"], version = "^2.16.0"}
+uvicorn = "0.34.0"
 
 [tool.poetry.group.lint]
 optional = true
@@ -66,43 +66,43 @@ target-version = "py312"
 # See Rules: https://docs.astral.sh/ruff/rules/
 ignore = ["D100", "D104", "D106", "E501", "TRY003", "ANN201"]
 select = [
-  "F",    # Pyflakes
-  "E",    # pycodestyle - Error
-  "W",    # pycodestyle - Warning
+  "F", # Pyflakes
+  "E", # pycodestyle - Error
+  "W", # pycodestyle - Warning
   "C901", # McCabe complex-structure
-  "I",    # isort
-  "N",    # pep8-naming
-  "D",    # pydocstyle
-  "UP",   # pyupgrade
-  "ANN",  # flake8-annotations
-  "S",    # flake8-bandit
-  "A",    # flake8-builtins
-  "COM",  # flake8-commas
-  "C4",   # flake8-comprehensions
-  "DTZ",  # flake8-datetimez
-  "T10",  # flake8-debugger
-  "DJ",   # flake8-django
-  "LOG",  # flake8-logging
-  "G",    # flake8-logging-format
-  "INP",  # flake8-no-pep420
-  "PIE",  # flake8-pie
-  "T20",  # flake8-print
-  "PYI",  # flake8-pyi
-  "RSE",  # flake8-raise
-  "RET",  # flake8-return
+  "I", # isort
+  "N", # pep8-naming
+  "D", # pydocstyle
+  "UP", # pyupgrade
+  "ANN", # flake8-annotations
+  "S", # flake8-bandit
+  "A", # flake8-builtins
+  "COM", # flake8-commas
+  "C4", # flake8-comprehensions
+  "DTZ", # flake8-datetimez
+  "T10", # flake8-debugger
+  "DJ", # flake8-django
+  "LOG", # flake8-logging
+  "G", # flake8-logging-format
+  "INP", # flake8-no-pep420
+  "PIE", # flake8-pie
+  "T20", # flake8-print
+  "PYI", # flake8-pyi
+  "RSE", # flake8-raise
+  "RET", # flake8-return
   "SLOT", # flake8-slot
-  "SIM",  # flake8-simplify
-  "TID",  # flake8-tidy-imports
-  "TC",   # flake8-type-checking
-  "INT",  # flake8-gettext
-  "ARG",  # flake8-unused-arguments
-  "PTH",  # flake8-use-pathlib
-  "TD",   # flake8-todo
-  "ERA",  # flake8-eradicate
-  "PL",   # pylint
-  "TRY",  # tryceratops
+  "SIM", # flake8-simplify
+  "TID", # flake8-tidy-imports
+  "TC", # flake8-type-checking
+  "INT", # flake8-gettext
+  "ARG", # flake8-unused-arguments
+  "PTH", # flake8-use-pathlib
+  "TD", # flake8-todo
+  "ERA", # flake8-eradicate
+  "PL", # pylint
+  "TRY", # tryceratops
   "PERF", # Perflint
-  "RUF",  # ruff
+  "RUF", # ruff
 ]
 
 [tool.ruff.lint.flake8-tidy-imports]
