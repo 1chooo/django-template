@@ -1,15 +1,19 @@
 FROM python:3.12
 
-RUN pip install --upgrade pip setuptools wheel
-
-COPY ./requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
-
-COPY ./manage.py /manage.py
-COPY ./docker-entrypoint /docker-entrypoint
-
 RUN apt-get update
 RUN apt-get install -y locales locales-all
 
-COPY ./features /features
+COPY ./requirements.txt /requirements.txt
+
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
+    && pip install --no-cache-dir -r /requirements.txt
+
+COPY ./manage.py /manage.py
+
 COPY ./config /config
+COPY ./common /common
+COPY ./utils /utils
+
+COPY ./features /features
+
+COPY ./docker-entrypoint /docker-entrypoint
