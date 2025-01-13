@@ -1,5 +1,5 @@
 [tool.poetry]
-authors = ["Futurenest inc. RD Team, Boris initiative"]
+authors = ["1chooo.com, Hugo initiative"]
 description = "django template"
 name = "django-template"
 package-mode = false
