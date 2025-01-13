@@ -1,51 +1,59 @@
 # Django Template
 
-## requirements extensions
+## Requirements Extensions
 
--  python development extensions(e.g. `ms-python.python`, `ms-python.vscode-pylance`, etc.)
--  [editorconfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
--  [ruff](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
+- python development extensions(e.g. `ms-python.python`, `ms-python.vscode-pylance`, etc.)
+- [editorconfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+- [ruff](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
 
-## recommended extensions
+## Recommended Extensions
 
--  [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
--  [Doxygen Documentation Generator](https://marketplace.visualstudio.com/items?itemName=cschlosser.doxdocgen)
+- [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
+- [Doxygen Documentation Generator](https://marketplace.visualstudio.com/items?itemName=cschlosser.doxdocgen)
 
-## core dependencies
+## Core Dependencies
 
--  python 3.12
--  django 5.1
+- python 3.12
+- django 5.1
 
 ## The beginning of everything
 
 1. install `python3.12` and `poetry` if you don't have it, and make sure you poetry config is set to `virtualenvs.in-project = true`.
 
 2. create a virtual environment. for example:
-   ```shell
-   poetry env use python3.12
-   python3.12 -m venv .venv
-   ```
-   -  If you are using Windows, please use these commands
-      ```shell
-      python -m venv .venv
-      py -3.12 -m venv .venv
-      ```
+
+    ```shell
+    poetry env use python3.12
+    python3.12 -m venv .venv
+    ```
+
+    -  If you are using Windows, please use these commands
+
+        ```shell
+        python -m venv .venv
+        py -3.12 -m venv .venv
+        ```
+
 3. install the dependencies. for example:
-   ```shell
-   poetry install
-   poetry install --with=lint
-   poetry install --with=dev
-   poetry install --with=lint --with=dev
-   ```
+
+    ```shell
+    poetry install
+    poetry install --with=lint
+    poetry install --with=dev
+    poetry install --with=lint --with=dev
+    ```
+
 4. activate the virtual environment.
+
 5. install the pre-commit hooks.
+
    ```shell
    pre-commit install
    ```
 
 PS. can also use `pre-commit run --all-files` to run the pre-commit hooks manually.
 
-## how to run locally
+## How to run locally
 
 1. make sure already installed the dependencies.
 2. make sure already copy the `.env.example` in `./dotenv` to `.env` and set the environment variables. also all dependencies services are running.
@@ -62,7 +70,13 @@ PS. can also use `pre-commit run --all-files` to run the pre-commit hooks manual
    python -m uvicorn config.asgi:application
    ```
 
-## how to run celery related services
+   if you want to use the auto-reload feature, you can add the `--reload` flag.
+
+   ```shell
+   python -m uvicorn config.asgi:application --reload
+   ```
+
+## How to run celery related services
 
 1. make sure already installed the dependencies.
 2. make sure already copy the `.env.example` in `./dotenv` to `.env` and set the environment variables. also all dependencies services are running.activate the virtual environment.
@@ -79,6 +93,7 @@ PS. can also use `pre-commit run --all-files` to run the pre-commit hooks manual
       ```
 
    -  inspect the tasks.
+
       ```shell
       celery -A config inspect registered
       ```
@@ -88,23 +103,26 @@ PS. can also use `pre-commit run --all-files` to run the pre-commit hooks manual
       celery -A config call <task_name> -a <args>
       ```
 
-PS there are some celery relative services such as `celery-beat`, `celery-flower`, etc. please refer to the [celery documentation](https://docs.celeryproject.org/en/stable/index.html) for more information.
+> [!NOTE]
+> There are some celery relative services such as `celery-beat`, `celery-flower`, etc. Please refer to the [celery documentation](https://docs.celeryproject.org/en/stable/index.html) for more information.
 
-## how to migrate models to database
+## How to migrate models to database
 
 1. make sure already installed the dependencies.
 2. make sure already copy the `.env.example` in `./dotenv` to `.env` and set the environment variables. also all dependencies services are running.
 3. activate the virtual environment.
 4. make migrations.
+
    ```shell
    python manage.py makemigrations
    ```
 5. migrate the models to the database.
+
    ```shell
    python manage.py migrate
    ```
 
 ## Note
-
--  every model must inherit `BaseModel` in `common.models`.
--  every admin register class must inherit `BaseAdmin` in `common.admin`.
+> [!NOTE]
+> -  every model must inherit `BaseModel` in `common.models`.
+> -  every admin register class must inherit `BaseAdmin` in `common.admin`.
