@@ -47,7 +47,7 @@ def generate_crud_controller(  # noqa: C901
             q = self.Model(**body.dict())
 
             try:
-                q.create(request.user)
+                q.save(request.user)
             except IntegrityError as e:
                 raise Http400BadRequestException("code already exists") from e
 

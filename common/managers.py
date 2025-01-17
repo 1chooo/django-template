@@ -60,6 +60,23 @@ class BaseModelManager(Manager):
                     obj.updated_by_user_id = user
         return super().bulk_update(objs, fields, batch_size)
 
+    def create(
+        self,
+        user: AbstractBaseUser | UUID | str | None = None,
+        **kwargs: dict[str, Any],
+    ):
+        """Overwritten get_or_create method for setting created_by and updated_by fields."""
+        if user is not None:
+            if isinstance(user, AbstractBaseUser):
+                kwargs.setdefault("created_by_user", user)
+                kwargs.setdefault("updated_by_user", user)
+            else:
+                if isinstance(user, str):
+                    user = UUID(user)
+                kwargs.setdefault("created_by_user_id", user)
+                kwargs.setdefault("updated_by_user_id", user)
+        return super().create(**kwargs)
+
     def get_or_create(
         self,
         defaults: dict[str, Any] = ...,

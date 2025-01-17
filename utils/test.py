@@ -76,7 +76,7 @@ def create_basic_controller_test(model: type[BaseModel], url: str):  # noqa: C90
             )
             fields = model._meta.get_fields()[9:]
             instance = model(**create_test_object(fields))  # type: ignore
-            instance.create(user)
+            instance.save(user)
 
         def test_get(self) -> None:
             get_id = model.objects.get().id

@@ -102,39 +102,16 @@ class BaseModel(models.Model):
 
         """
         if user is not None:
-            if isinstance(user, UUID):
-                self.updated_by_user_id = user
-            elif isinstance(user, str):
-                self.updated_by_user_id = UUID(user)
-            else:
+            if isinstance(user, AbstractBaseUser):
+                if self._state.adding:
+                    self.created_by_user = user
                 self.updated_by_user = user
-        super().save(*args, **kwargs)  # type: ignore
-
-    def create(self, user: AbstractBaseUser | UUID | str | None = None, *args: list[Any], **kwargs: dict[Any, Any]):
-        """Create a new object with user information.
-
-        This method creates a new object and sets the 'created_by_user' and 'updated_by_user' fields to the specified user.
-        Additionally, any extra keyword arguments provided will be applied to the object.
-
-        Args:
-            user (AbstractBaseUser | UUID | str | None): The user responsible for creating the object.
-            *args (list[Any]): Additional positional arguments.
-            **kwargs (dict[Any, Any]): Additional keyword arguments to be applied to the object.
-
-        Returns:
-            None
-
-        """
-        if user is not None:
-            if isinstance(user, UUID):
-                self.created_by_user_id = user
-                self.updated_by_user_id = user
-            elif isinstance(user, str):
-                self.created_by_user_id = UUID(user)
-                self.updated_by_user_id = UUID(user)
             else:
-                self.created_by_user = user
-                self.updated_by_user = user
+                if isinstance(user, str):
+                    user = UUID(user)
+                if self._state.adding:
+                    self.created_by_user_id = UUID(user)
+                self.updated_by_user_id = UUID(user)
         super().save(*args, **kwargs)  # type: ignore
 
     def delete(self, user: AbstractBaseUser | UUID | str | None = None) -> None:

@@ -62,7 +62,10 @@ if AWS_S3_ENABLED:
     # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
     AWS_S3_REGION_NAME = env("AWS_S3_REGION_NAME", default=AWS_REGION_NAME)
     # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+    AWS_S3_CUSTOM_DOMAIN = env(
+        "AWS_S3_CUSTOM_DOMAIN",
+        default=f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com",
+    )
     # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 
@@ -162,7 +165,6 @@ APPS = [
     "ninja",
     "ninja_extra",
     "corsheaders",
-    "colorlog",
     "storages",
 ]
 LOCAL_APPS = [
@@ -248,7 +250,7 @@ else:
 # ------------------------------------------------------------------------------
 if AWS_S3_ENABLED and env.bool("MEDIA_USE_AWS_S3_Storage", default=False):
     # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
-    STORAGES["default"]["BACKEND"] = "storages.backends.s3.S3Storage"
+    STORAGES["default"]["BACKEND"] = "utils.storage.MediaS3Storage"
     # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 else:
@@ -326,7 +328,7 @@ if DISABLE_DOT_ENV:
         },
         "handlers": {
             "console": {"level": "CRITICAL", "class": "logging.StreamHandler", "formatter": "verbose"},
-            "uvicorn_console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "json"},
+            "uvicorn_console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "json"},
         },
         "loggers": {
             "django": {"handlers": ["console"], "propagate": True},
