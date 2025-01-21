@@ -99,10 +99,8 @@ SILENCED_SYSTEM_CHECKS = [
 ]
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": env("DATABASE_HOST"),
-        "PORT": env("DATABASE_PORT"),
-        "NAME": env("DATABASE_DB"),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ROOT_DIR / "sql" / "db.sqlite3",
     },
 }
 db_secret_name = env("DATABASE_SECRET_NAME", default=None)
@@ -160,6 +158,7 @@ APPS = [
     "django_celery_results",
     "allauth",
     "allauth.account",
+    "allauth.headless",
     "allauth.socialaccount",
     "rest_framework",
     "ninja",
@@ -169,6 +168,7 @@ APPS = [
 ]
 LOCAL_APPS = [
     "features.core",
+    "features.bot",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = APPS + LOCAL_APPS
@@ -328,7 +328,7 @@ if DISABLE_DOT_ENV:
         },
         "handlers": {
             "console": {"level": "CRITICAL", "class": "logging.StreamHandler", "formatter": "verbose"},
-            "uvicorn_console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "json"},
+            "uvicorn_console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "json"},
         },
         "loggers": {
             "django": {"handlers": ["console"], "propagate": True},
