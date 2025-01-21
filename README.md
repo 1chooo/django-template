@@ -122,7 +122,12 @@ PS. can also use `pre-commit run --all-files` to run the pre-commit hooks manual
    python manage.py migrate
    ```
 
-## Note
 > [!NOTE]
 > -  every model must inherit `BaseModel` in `common.models`.
 > -  every admin register class must inherit `BaseAdmin` in `common.admin`.
+
+## How to create a superuser
+
+```shell
+python manage.py createsuperuser
+```
